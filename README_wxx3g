@@ -1,0 +1,47 @@
+在Windows上使用goagent翻墙基本上波澜不惊，一步一步来就ok，不会遇到什么问题。但是在Ubuntu就没有那么顺利。主要有这么两个问题：
+
+   我们首先看看整体的步骤：
+
+申请Google Appengine并创建appid。
+
+下载goagent稳定版 http://code.google.com/p/goagent/
+
+修改local\proxy.ini中的[gae]下的appid=你的appid(多appid请用|隔开)
+
+在server目录下运行"python uploader.zip"
+
+chrome请安装SwitchySharp插件，然后导入这个设置http://goagent.googlecode.com/files/SwitchyOptions.bak
+
+自带的那个uploader.zip无法上传。
+
+   对于这个问题，解决办法如下：
+
+下载Google App Engine SDK for Python。链接如下：https://code.google.com/appengine/downloads.html
+
+下载一个zip包，将zip包放进goagent路径下，解压得到一个google_appengine目录。
+
+修改AppID。修改goagent/server/python/app.yaml文件中的appid
+
+在goagent路径下，终端内输入：
+
+           python google_appengine/appcfg.py update server/python/，然后就按照提示就好。
+
+chrome访问很多https网站弹出证书警示，需要将local/CA.crt证书导入
+
+   解决办法：
+
+sudo apt-get install libnss3-tools
+
+假设goagent在用户的家目录：certutil -d sql:$HOME/.pki/nssdb -A -t "C,," -n GoAgent -i '~/goagent/local/CA.crt'
+
+重启chrome浏览器，这下ok了。
+
+SwitchySharp没办法从Chrome应用商店下载下来
+
+   解决办法：
+
+   上Google Code下载扩展文件：https://code.google.com/p/switchysharp/，然后安装。
+
+   400 error:
+
+   把app.yaml第3行的runtime: python27改为runtime: python就可以了...以前怎样上传都不可以，今天一下就上传成功2个app
